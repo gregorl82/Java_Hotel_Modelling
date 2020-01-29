@@ -67,4 +67,25 @@ public class BedroomTest {
         bedroom1.setRate(80.00);
         assertEquals(80.00, bedroom1.getRate(), 0.01);
     }
+
+    @Test
+    public void checkHasSpace(){
+        bedroom1.addGuest(guest2);
+        assertTrue(bedroom1.hasSpace());
+    }
+
+    @Test
+    public void checkHasNoSpace(){
+        bedroom1.addGuest(guest2);
+        bedroom1.addGuest(guest2);
+        assertFalse(bedroom1.hasSpace());
+    }
+
+    @Test
+    public void capacityFull(){
+        bedroom1.addGuest(guest2);
+        bedroom1.addGuest(guest2);
+        bedroom1.addGuest(guest2);
+        assertEquals(2, bedroom1.guestCount());
+    }
 }

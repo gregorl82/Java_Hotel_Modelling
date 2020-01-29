@@ -41,7 +41,9 @@ public class Bedroom {
     }
 
     public void addGuest(Guest guest){
-        this.guests.add(guest);
+        if (hasSpace()) {
+            this.guests.add(guest);
+        }
     }
 
     public void emptyRoom(){
@@ -52,6 +54,8 @@ public class Bedroom {
         return this.guests.size() > 0;
     }
 
-
+    public boolean hasSpace(){
+        return this.guestCount() < this.capacity;
+    }
 
 }
