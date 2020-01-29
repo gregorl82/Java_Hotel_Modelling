@@ -4,6 +4,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class HotelTest {
 
@@ -14,11 +15,12 @@ public class HotelTest {
     private ConferenceRoom conRoom2;
     private Guest guest1;
     private Guest guest2;
+    private Booking booking1;
 
     @Before
     public void before(){
-        bedroom1 = new Bedroom(101, 2, "double");
-        bedroom2 = new Bedroom(102, 1, "single");
+        bedroom1 = new Bedroom(101, 2, "double", 75.50);
+        bedroom2 = new Bedroom(102, 1, "single", 75.50);
         ArrayList<Bedroom> bedrooms = new ArrayList<>();
         bedrooms.add(bedroom1);
         bedrooms.add(bedroom2);
@@ -30,6 +32,7 @@ public class HotelTest {
         hotel = new Hotel("CodeClan Towers", bedrooms, conRooms);
         guest1 = new Guest("Gregor");
         guest2 = new Guest("Emma");
+        booking1 = new Booking(bedroom1, 3);
     }
 
     @Test
@@ -71,5 +74,20 @@ public class HotelTest {
         hotel.checkInConRoom(conRoom1, guest2);
         hotel.checkOutConRoom(conRoom1);
         assertEquals(0, conRoom1.guestCount());
+    }
+
+    @Test
+    public void canCreateBooking(){
+        Booking testBooking = hotel.bookRoom(bedroom1, 3);
+        assertEquals("Booking", testBooking.getClass().getSimpleName());
+        assertEquals(1, hotel.countBookings());
+    }
+
+    @Test
+    public void canReturnVacantBedrooms(){
+        bedroom1.addGuest(guest1);
+        ArrayList<Bedroom> vacantRooms = hotel.findVacantRooms();
+        assertEquals(1, vacantRooms.size());
+        assertTrue(vacantRooms.contains(bedroom2));
     }
 }
